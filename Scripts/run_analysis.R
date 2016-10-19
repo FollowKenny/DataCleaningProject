@@ -41,8 +41,7 @@ SamsungMerge <- function() {
   data.dir <<- data.dir
   data.url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
   data.zip <- file.path(data.dir, "Dataset.zip")
-  # TODO : uncomment
-  #download.file(data.url, data.zip)
+  download.file(data.url, data.zip)
 
   # Read and Merge
   train.data.list <- ReadData("train")
@@ -76,7 +75,7 @@ SamsungSelect <- function(exp.tbl) {
   col.keep <- grep("mean|std", feature.tbl[[2]])
   
   # select the right columns and name it accordingly
-  activity.stdmean <- select(exp.tbl, activity, subject, col.keep) %>%
+  activity.stdmean <- dplyr::select(exp.tbl, activity, subject, col.keep) %>%
                         setnames(old=3:81, new=feature.tbl[col.keep, 2][[1]])
   activity.stdmean
 }
@@ -104,7 +103,9 @@ Main <- function() {
   exp.tbl <- SamsungMerge()
   stdmean <- SamsungSelect(exp.tbl)
   final.tbl <- SamsungLabelActivity(stdmean)
-  final.tbl %>% group_by(activity, subject) %>% summarise_each(funs = "mean")
+  final.avg.tbl <- final.tbl %>% group_by(activity, subject) %>% summarise_each(funs = "mean")
+  output.file <- file.path(data.dir, "activities_avg.csv")
+  write_csv(final.avg.tbl, output.file, append = F, col_names = T)
 }
 
-hate <- Main()
+Main()
