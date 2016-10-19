@@ -26,7 +26,7 @@ For more information about this dataset contact: activityrecognition@smartlab.ws
 ## Script run_analysis.R description
 
 ### Function SamsungMerge
-Get the data and construct the merged train and test tbdl_df from the Samsung Experiment. This function ask the user of the script the directory in which the user would like to see the data from the Samsung Experiment downloaded.
+Get the data and construct the merged train and test tbdl_df from the Samsung Experiment. This function ask the user of the script the directory in which he would like to see the data from the Samsung Experiment downloaded.
 
 - Returns : train and test data merged in one table
 
